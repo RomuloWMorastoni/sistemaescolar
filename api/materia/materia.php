@@ -1,36 +1,35 @@
 <?php
 require_once("../core/header.php");
 
+function getComboTurma($codigoTurma = false){
+    $arDadosTurma = array();
+    $dadosTurma = @file_get_contents("../turma/turmas.json");
+    if($dadosTurma){
+        // transforma os dados lidos em ARRAY, que estavam em JSON
+        $arDadosTurma = json_decode($dadosTurma, true);
+    }
 
-// function getComboTurma($codigoTurma = false){
-//     $arDadosTurma = array();
-//     $dadosTurma = @file_get_contents('../turma/turma.json');
-    
-//     if($dadosTurma){
-//         $arDadosTurma = json_decode($dadosTurma, true);
-//     }
+    $html = '<div style="display:flex;gap:5px;flex-direction:row;">';
 
-//     $html = '<div style="display:flex;gap:5px;flex-direction:row;">';
+    $html .= '  <label for="turma">Turma:</label>';
+    $html .= '  <select id="turma" name="turma">';
+    $html .= '    <option value="0">Selecione</option>';
 
-//     $html .= '  <label for="turma">Turma:</label>';
-//     $html .= '  <select id="turma" name="turma">';
-//     $html .= '    <option value="0">Selecione</option>';
-    
-//     foreach($arDadosTurma as $aDados){
-//         $selected = '';
-        
-//         if($codigoTurma == $aDados['codigo']){
-//             $selected = " selected ";
-//         }
-        
-//         $html .= '<option value="'. $aDados["codigo"] .'" ' . $selected .'>' . $aDados["descricao"] . '</option>';
-//     }
-    
-//     $html .= '</selected>';
-//     $html .= '</div>';
-    
-//     return $html;
-// }
+    //  preencher com php - mais options de TURMA
+    foreach($arDadosTurma as $aDados){
+        $selected = "";
+        if($codigoTurma == $aDados["codigo"]){
+            $selected = " selected ";                    
+        }
+
+        $html .= '<option value="'. $aDados["codigo"] .'" ' . $selected .'>' . $aDados["nome"] . '</option>';
+    }
+
+    $html .= '</select>';
+    $html .= '</div>';
+
+    return $html;
+}
 
 function getDadosMateria($codigoMateriaAlterar){
     $nome = "";
@@ -64,6 +63,7 @@ function getDadosMateria($codigoMateriaAlterar){
 $codigo = "";
 $nome = "";
 $turma = "";
+$turmaCombo = "";
 $display = "block;";
 
 $encontrouMateria = false;
@@ -90,6 +90,8 @@ if(isset($_GET["ACAO"])){
     }
 }
 
+$turmaCombo = getComboTurma($codigo);
+
 $sHTML = '<div> <link rel="stylesheet" href="../css/formulario.css">';
 
 // FORMULARIO DE CADASTRO DE MateriaS
@@ -102,9 +104,8 @@ $sHTML .= '<h2 style="text-align:center;">Formulário de Materia</h2>
         <input type="hidden" id="codigo" name="codigo" value="' . $codigo . '" required>
         <input type="text" id="codigoTela" name="codigoTela" value="' . $codigo . '" disabled>
         
-        <label for="email">Turma:</label>
-        <input type="text" id="turma" name="turma" required value="' . $turma . '">
-
+        ' . $turmaCombo . '
+        
         <label for="nome">Nome:</label>
         <input type="text" id="nome" name="nome" required value="' . $nome . '">
         
