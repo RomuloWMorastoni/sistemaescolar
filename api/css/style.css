@@ -1,0 +1,44 @@
+html {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.background-06 {
+    background: linear-gradient(90deg, #43a4f9, #1ef4ff);
+}
+
+body {
+    /* height: 95vh; */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;    
+}
+
+.header ul li {
+    list-style: none;
+}
+
+/* CLASSE CONTAINER */
+.container {
+    /* margin: 25px; */
+    display: flex;
+    flex-direction: column;
+    height: 80vh;
+}
+
+.footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #fff;    
+}
+
+#autor{
+    /* NEGRITO */
+    font-weight: bold;
+    margin: 0 5px;
+}
